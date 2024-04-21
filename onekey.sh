@@ -55,4 +55,4 @@ change_orig() {
         echo "文件中已包含'tsinghua'，不做任何更改。"
     fi
 }
-
+update_system
