@@ -38,7 +38,7 @@ update_system() {
 change_orig() {
 
 # 文件名
-    filename="/etc/apt/sources.list1"
+    filename="/etc/apt/sources.list"
 
     # 检查文件中是否包含"qinghua"
     if ! grep -q "tsinghua" "$filename"; then
@@ -55,4 +55,35 @@ change_orig() {
         echo "文件中已包含'tsinghua'，不做任何更改。"
     fi
 }
-update_system
+
+# 定义一个函数来显示帮助信息
+usage() {
+  echo "使用方法: $0 [options]"
+  echo "选项:"
+  echo "  -h, --help    显示帮助信息"
+  echo "  -v, --verbose 启用详细模式"
+  echo "  -c, --count   设置计数（默认为10）"
+  exit 1
+}
+
+while getopts ":hv:c:" opt; do
+  case $opt in
+    h) # 显示帮助信息
+      usage
+      ;;
+    v) # 开启详细模式
+      verbose=1
+      ;;
+    c) # 设置计数
+      count=$OPTARG
+      ;;
+    \?) # 处理无效选项
+      echo "无效选项: -$OPTARG" >&2
+      usage
+      ;;
+    :) # 处理缺少参数的情况
+      echo "选项 -$OPTARG 需要一个参数。" >&2
+      usage
+      ;;
+  esac
+done
